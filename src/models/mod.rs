@@ -71,10 +71,24 @@ pub enum Currency {
     BTC,
     #[serde(alias = "eth")]
     ETH,
+    #[serde(alias = "ethw")]
+    ETHW,
+    #[serde(alias = "eurr")]
+    EURR,
+    #[serde(alias = "matic")]
+    MATIC,
+    #[serde(alias = "sol")]
+    SOL,
+    #[serde(alias = "steth")]
+    STETH,
     #[serde(alias = "usd")]
     USD,
+    #[serde(alias = "usdc")]
+    USDC,
     #[serde(alias = "usdt")]
     USDT,
+    #[serde(alias = "xrp")]
+    XRP,
 }
 
 impl Default for Currency {
