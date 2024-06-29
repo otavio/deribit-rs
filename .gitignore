@@ -3,3 +3,4 @@
 Cargo.lock
 .env
 examples/deserialize.rs
+/.pre-commit-config.yaml
