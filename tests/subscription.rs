@@ -63,8 +63,8 @@ fn book() {
         let (mut client, subscription) = drb.connect().await.unwrap();
 
         let req = PublicSubscribeRequest::new(&[
-            "book.BTC-PERPETUAL.raw".into(),
-            "book.ETH-PERPETUAL.raw".into(),
+            "book.BTC-PERPETUAL.agg2".into(),
+            "book.ETH-PERPETUAL.agg2".into(),
         ]);
 
         let _ = client.call(req).await.unwrap();
@@ -250,8 +250,8 @@ fn perpetual() {
         let (mut client, subscription) = drb.connect().await.unwrap();
 
         let req = PublicSubscribeRequest::new(&[
-            "perpetual.BTC-PERPETUAL.raw".into(),
-            "perpetual.ETH-PERPETUAL.raw".into(),
+            "perpetual.BTC-PERPETUAL.agg2".into(),
+            "perpetual.ETH-PERPETUAL.agg2".into(),
         ]);
         let _ = client.call(req).await.unwrap();
 
@@ -313,11 +313,11 @@ fn ticker() {
 
         let req = PublicSubscribeRequest {
             channels: vec![
-                "ticker.BTC-PERPETUAL.raw".into(),
-                "ticker.ETH-PERPETUAL.raw".into(),
+                "ticker.BTC-PERPETUAL.agg2".into(),
+                "ticker.ETH-PERPETUAL.agg2".into(),
                 "ticker.BTC-28JUN19.100ms".into(),
-                "ticker.BTC-28JUN19.raw".into(),
-                "ticker.BTC-28JUN19-7500-P.raw".into(),
+                "ticker.BTC-28JUN19.agg2".into(),
+                "ticker.BTC-28JUN19-7500-P.agg2".into(),
                 "ticker.BTC-28JUN19-7500-P.100ms".into(),
             ],
         };
@@ -362,8 +362,8 @@ fn trades() {
 
         let req = PublicSubscribeRequest {
             channels: vec![
-                "trades.BTC-PERPETUAL.raw".into(),
-                "trades.ETH-PERPETUAL.raw".into(),
+                "trades.BTC-PERPETUAL.agg2".into(),
+                "trades.ETH-PERPETUAL.agg2".into(),
             ],
         };
         let _ = client.call(req).await.unwrap();
@@ -599,22 +599,22 @@ fn sub_unsub() {
 
         let req = PublicSubscribeRequest {
             channels: vec![
-                "ticker.BTC-PERPETUAL.raw".into(),
-                "ticker.ETH-PERPETUAL.raw".into(),
+                "ticker.BTC-PERPETUAL.agg2".into(),
+                "ticker.ETH-PERPETUAL.agg2".into(),
                 "ticker.BTC-28JUN19.100ms".into(),
-                "ticker.BTC-28JUN19.raw".into(),
-                "ticker.BTC-28JUN19-7500-P.raw".into(),
+                "ticker.BTC-28JUN19.agg2".into(),
+                "ticker.BTC-28JUN19-7500-P.agg2".into(),
                 "ticker.BTC-28JUN19-7500-P.100ms".into(),
             ],
         };
 
         let _ = client.call(req).await.unwrap();
         let req = PublicSubscribeRequest::new(&[
-            "ticker.BTC-PERPETUAL.raw".into(),
-            "ticker.ETH-PERPETUAL.raw".into(),
+            "ticker.BTC-PERPETUAL.agg2".into(),
+            "ticker.ETH-PERPETUAL.agg2".into(),
             "ticker.BTC-28JUN19.100ms".into(),
-            "ticker.BTC-28JUN19.raw".into(),
-            "ticker.BTC-28JUN19-7500-P.raw".into(),
+            "ticker.BTC-28JUN19.agg2".into(),
+            "ticker.BTC-28JUN19-7500-P.agg2".into(),
             "ticker.BTC-28JUN19-7500-P.100ms".into(),
         ]);
 
