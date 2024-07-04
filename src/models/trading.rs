@@ -264,7 +264,7 @@ pub struct Order {
     pub post_only: bool,
     #[serde(deserialize_with = "deserialize_price")]
     pub price: Option<f64>, // None for stop_market
-    pub profit_loss: f64,
+    pub profit_loss: Option<f64>,
     pub reduce_only: bool,
     pub stop_price: Option<f64>,
     pub time_in_force: TimeInForce,
