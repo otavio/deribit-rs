@@ -1,6 +1,8 @@
 use anyhow::Error;
 use deribit::{
-    models::{AuthRequest, Currency, GetAccountSummaryRequest, GetSubaccountsRequest},
+    models::{
+        AuthRequest, Currency, GetAccountSummaryRequest, GetPositionsRequest, GetSubaccountsRequest,
+    },
     Deribit, DeribitBuilder,
 };
 use fehler::{throw, throws};
@@ -40,6 +42,29 @@ fn get_account_summary() {
         let req = AuthRequest::credential_auth(&key, &secret);
         let _ = client.call(req).await?.await?;
         let req = GetAccountSummaryRequest::extended(Currency::BTC);
+        Ok::<_, Error>(client.call(req).await?.await?)
+    };
+    let resp = rt.block_on(fut);
+    if let Err(err) = resp {
+        println!("{:?}", err);
+        throw!(err);
+    }
+}
+
+#[test]
+#[throws(Error)]
+fn get_positions() {
+    let AccountTest {
+        rt,
+        drb,
+        key,
+        secret,
+    } = AccountTest::default();
+    let fut = async move {
+        let (mut client, _) = drb.connect().await?;
+        let req = AuthRequest::credential_auth(&key, &secret);
+        let _ = client.call(req).await?.await?;
+        let req = GetPositionsRequest::options(Currency::BTC);
         Ok::<_, Error>(client.call(req).await?.await?)
     };
     let resp = rt.block_on(fut);
