@@ -8,8 +8,8 @@ use serde::{
 pub struct DeribitPriceRankingData {
     pub enabled: bool,
     pub identifier: String,
-    pub original_price: f64,
-    pub price: f64,
+    pub original_price: Option<f64>,
+    pub price: Option<f64>,
     pub timestamp: u64,
     pub weight: f64,
 }
