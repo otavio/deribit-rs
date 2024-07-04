@@ -32,7 +32,7 @@ pub struct UserPositionsData {
     pub leverage: f64,
     pub maintenance_margin: f64,
     pub mark_price: f64,
-    pub open_orders_margin: f64,
+    pub open_orders_margin: Option<f64>,
     pub realized_funding: Option<f64>,
     pub realized_profit_loss: f64,
     pub settlement_price: f64,
