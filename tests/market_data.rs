@@ -3,7 +3,7 @@ use chrono::{Duration, Utc};
 use deribit::{
     models::{
         market_data::GetHistoricalVolatilityRequest, Currency, GetBookSummaryByCurrencyRequest,
-        GetFundingRateValueRequest, GetIndexRequest, GetInstrumentsRequest, GetOrderBookRequest,
+        GetFundingRateValueRequest, GetIndexPriceRequest, GetInstrumentsRequest, GetOrderBookRequest,
     },
     DeribitBuilder,
 };
@@ -12,7 +12,7 @@ use tokio::runtime::Runtime;
 
 #[test]
 #[throws(Error)]
-fn get_index() {
+fn get_index_price() {
     let _ = env_logger::try_init();
 
     let drb = DeribitBuilder::default().testnet(true).build().unwrap();
@@ -20,9 +20,9 @@ fn get_index() {
 
     let fut = async move {
         let (mut client, _) = drb.connect().await?;
-        let req = GetIndexRequest::new(Currency::BTC);
+        let req = GetIndexPriceRequest::new("btc_usd".to_string());
         let _ = client.call(req).await?.await?;
-        let req = GetIndexRequest::new(Currency::ETH);
+        let req = GetIndexPriceRequest::new("eth_usd".to_string());
         let _ = client.call(req).await?.await?;
 
         Ok::<_, Error>(())
@@ -44,6 +44,8 @@ fn get_instruments() {
 
     let fut = async move {
         let (mut client, _) = drb.connect().await?;
+        let req = GetInstrumentsRequest::default();
+        let _ = client.call(req).await?.await?;
         let req = GetInstrumentsRequest::new(Currency::BTC);
         let _ = client.call(req).await?.await?;
         let req = GetInstrumentsRequest::expired(Currency::ETH);

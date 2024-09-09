@@ -4,7 +4,6 @@ use crate::{
 };
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 
 use super::subscription::{Greeks, Stats};
 
@@ -68,31 +67,31 @@ impl Request for GetBookSummaryByCurrencyRequest {
 }
 
 #[derive(Deserialize, Serialize, Clone, Debug)]
-pub struct GetIndexRequest {
-    pub currency: Currency,
+pub struct GetIndexPriceRequest {
+    pub index_name: String,
 }
 
-impl GetIndexRequest {
-    pub fn new(currency: Currency) -> Self {
-        Self { currency }
+impl GetIndexPriceRequest {
+    pub fn new(index_name: String) -> Self {
+        Self { index_name }
     }
 }
 
 #[derive(Deserialize, Serialize, Clone, Debug)]
-pub struct GetIndexResponse {
-    pub edp: f64,
-    #[serde(flatten)]
-    pub indices: HashMap<Currency, f64>,
+pub struct GetIndexPriceResponse {
+    pub estimated_delivery_price: f64,
+    pub index_price: f64,
 }
 
-impl Request for GetIndexRequest {
-    const METHOD: &'static str = "public/get_index";
-    type Response = GetIndexResponse;
+impl Request for GetIndexPriceRequest {
+    const METHOD: &'static str = "public/get_index_price";
+    type Response = GetIndexPriceResponse;
 }
 
 #[derive(Deserialize, Serialize, Clone, Debug, Default)]
 pub struct GetInstrumentsRequest {
-    pub currency: Currency,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub currency: Option<Currency>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub kind: Option<AssetKind>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -102,14 +101,14 @@ pub struct GetInstrumentsRequest {
 impl GetInstrumentsRequest {
     pub fn new(currency: Currency) -> Self {
         Self {
-            currency,
+            currency: Some(currency),
             ..Default::default()
         }
     }
 
     pub fn expired(currency: Currency) -> Self {
         Self {
-            currency,
+            currency: Some(currency),
             expired: Some(true),
             ..Default::default()
         }
@@ -125,7 +124,7 @@ impl GetInstrumentsRequest {
 
     pub fn with_kind(currency: Currency, kind: AssetKind) -> Self {
         Self {
-            currency,
+            currency: Some(currency),
             kind: Some(kind),
             ..Default::default()
         }
