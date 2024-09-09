@@ -132,20 +132,91 @@ impl GetInstrumentsRequest {
 }
 
 #[derive(Deserialize, Serialize, Clone, Debug)]
-pub struct GetInstrumentsResponse {
-    pub base_currency: String,
-    pub contract_size: f64,
-    pub creation_timestamp: u64,
-    pub expiration_timestamp: u64,
-    pub instrument_name: String,
-    pub is_active: bool,
-    pub kind: AssetKind,
-    pub min_trade_amount: f64,
-    pub option_type: Option<String>,
-    pub quote_currency: Option<Currency>,
-    pub settlement_period: Option<String>,
-    pub strike: Option<f64>,
-    pub tick_size: f64,
+#[serde(rename_all = "snake_case", tag = "kind")]
+pub enum GetInstrumentsResponse {
+    Future {
+        base_currency: String,
+        contract_size: f64,
+        creation_timestamp: u64,
+        expiration_timestamp: u64,
+        instrument_name: String,
+        is_active: bool,
+        min_trade_amount: f64,
+        quote_currency: Currency,
+        settlement_period: String,
+        tick_size: f64,
+    },
+    FutureCombo {
+        base_currency: String,
+        contract_size: f64,
+        creation_timestamp: u64,
+        expiration_timestamp: u64,
+        instrument_name: String,
+        is_active: bool,
+        min_trade_amount: f64,
+        quote_currency: Currency,
+        settlement_period: String,
+        tick_size: f64,
+    },
+    Option {
+        base_currency: String,
+        contract_size: f64,
+        creation_timestamp: u64,
+        expiration_timestamp: u64,
+        instrument_name: String,
+        is_active: bool,
+        min_trade_amount: f64,
+        option_type: String,
+        quote_currency: Currency,
+        settlement_period: String,
+        strike: f64,
+        tick_size: f64,
+    },
+    OptionCombo {
+        base_currency: String,
+        contract_size: f64,
+        creation_timestamp: u64,
+        expiration_timestamp: u64,
+        instrument_name: String,
+        is_active: bool,
+        min_trade_amount: f64,
+        quote_currency: Currency,
+        settlement_period: String,
+        tick_size: f64,
+    },
+    Spot {
+        base_currency: String,
+        contract_size: f64,
+        creation_timestamp: u64,
+        expiration_timestamp: u64,
+        instrument_name: String,
+        is_active: bool,
+        min_trade_amount: f64,
+        quote_currency: Currency,
+        tick_size: f64,
+    },
+}
+
+impl GetInstrumentsResponse {
+    pub fn get_instrument_name(&self) -> &str {
+        match self {
+            Self::Future {
+                instrument_name, ..
+            } => instrument_name,
+            Self::FutureCombo {
+                instrument_name, ..
+            } => instrument_name,
+            Self::Option {
+                instrument_name, ..
+            } => instrument_name,
+            Self::OptionCombo {
+                instrument_name, ..
+            } => instrument_name,
+            Self::Spot {
+                instrument_name, ..
+            } => instrument_name,
+        }
+    }
 }
 
 impl Request for GetInstrumentsRequest {
