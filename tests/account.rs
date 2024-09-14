@@ -64,7 +64,7 @@ fn get_positions() {
         let (mut client, _) = drb.connect().await?;
         let req = AuthRequest::credential_auth(&key, &secret);
         let _ = client.call(req).await?.await?;
-        let req = GetPositionsRequest::options(Currency::BTC);
+        let req = GetPositionsRequest::options("BTC".to_string());
         Ok::<_, Error>(client.call(req).await?.await?)
     };
     let resp = rt.block_on(fut);
