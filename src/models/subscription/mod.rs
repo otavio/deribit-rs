@@ -9,8 +9,7 @@ pub use channels::{
     InstrumentStateData, MarkPriceOptionChannel, MarkPriceOptionData, OrderBookDelta,
     PerpetualChannel, PerpetualData, QuoteChannel, QuoteData, Stats, TickerChannel, TickerData,
     TradesChannel, TradesData, UserChangesChannel, UserChangesData, UserOrdersChannel,
-    UserOrdersData, UserPortfolioChannel, UserPortfolioData, UserPositionsData, UserTradesChannel,
-    UserTradesData,
+    UserOrdersData, UserPortfolioChannel, UserPortfolioData, UserTradesChannel, UserTradesData,
 };
 use serde::{Deserialize, Serialize};
 
