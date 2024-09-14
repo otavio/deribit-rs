@@ -1,7 +1,4 @@
-use crate::models::{
-    subscription::{UserOrdersData, UserTradesData},
-    AssetKind, Direction,
-};
+use crate::models::subscription::{UserOrdersData, UserTradesData};
 
 use fehler::throw;
 use serde::{
@@ -12,33 +9,8 @@ use serde::{
 #[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct UserChangesData {
     pub trades: Vec<UserTradesData>,
-    pub positions: Vec<UserPositionsData>,
+    pub positions: Vec<crate::models::account::GetPositionsResponse>,
     pub orders: Vec<UserOrdersData>,
-}
-
-#[derive(Deserialize, Serialize, Debug, Clone)]
-pub struct UserPositionsData {
-    pub average_price: f64,
-    pub average_price_usd: Option<f64>,
-    pub delta: f64,
-    pub direction: Direction,
-    pub estimated_liquidation_price: Option<f64>,
-    pub floating_profit_loss: f64,
-    pub floating_profit_loss_usd: Option<f64>,
-    pub index_price: f64,
-    pub initial_margin: f64,
-    pub instrument_name: String,
-    pub kind: AssetKind,
-    pub leverage: f64,
-    pub maintenance_margin: f64,
-    pub mark_price: f64,
-    pub open_orders_margin: Option<f64>,
-    pub realized_funding: Option<f64>,
-    pub realized_profit_loss: f64,
-    pub settlement_price: f64,
-    pub size: f64,
-    pub size_currency: Option<f64>,
-    pub total_profit_loss: f64,
 }
 
 #[derive(Debug, Clone)]
