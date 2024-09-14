@@ -1,6 +1,6 @@
 use anyhow::Error;
 use deribit::{
-    models::{AuthRequest, Currency, GetPositionsRequest, PrivateSubscribeRequest},
+    models::{AuthRequest, GetPositionsRequest, PrivateSubscribeRequest},
     DeribitBuilder,
 };
 use dotenv::dotenv;
@@ -25,7 +25,7 @@ async fn main() -> Result<(), Error> {
         .await?;
 
     let positions = client
-        .call(GetPositionsRequest::futures(Currency::BTC))
+        .call(GetPositionsRequest::futures("BTC".to_string()))
         .await?
         .await?;
 

@@ -6,7 +6,7 @@ crate::define_request! {
     Name => GetPositions;
     Method => "private/get_positions";
     Request => {
-        pub currency: Currency,
+        pub currency: String,
         #[serde(skip_serializing_if = "Option::is_none")]
         pub kind: Option<AssetKind>,
     };
@@ -14,21 +14,21 @@ crate::define_request! {
 }
 
 impl GetPositionsRequest {
-    pub fn all(currency: Currency) -> Self {
+    pub fn all(currency: String) -> Self {
         Self {
             currency,
             kind: None,
         }
     }
 
-    pub fn futures(currency: Currency) -> Self {
+    pub fn futures(currency: String) -> Self {
         Self {
             currency,
             kind: Some(AssetKind::Future),
         }
     }
 
-    pub fn options(currency: Currency) -> Self {
+    pub fn options(currency: String) -> Self {
         Self {
             currency,
             kind: Some(AssetKind::Option),
