@@ -3,7 +3,8 @@ use chrono::{Duration, Utc};
 use deribit::{
     models::{
         market_data::GetHistoricalVolatilityRequest, Currency, GetBookSummaryByCurrencyRequest,
-        GetFundingRateValueRequest, GetIndexPriceRequest, GetInstrumentsRequest, GetOrderBookRequest,
+        GetFundingRateValueRequest, GetIndexPriceRequest, GetInstrumentsRequest,
+        GetOrderBookRequest,
     },
     DeribitBuilder,
 };

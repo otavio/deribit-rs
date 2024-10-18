@@ -79,7 +79,7 @@ pub enum GetPositionsResponse {
         theta: f64,
         total_profit_loss: f64,
         vega: f64,
-    }
+    },
 }
 
 crate::define_request! {
